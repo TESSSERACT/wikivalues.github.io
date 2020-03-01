@@ -1,0 +1,98 @@
+<head>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:400,700" rel="stylesheet">
+<link href='style.css' rel='stylesheet' type='text/css'>
+<title>8values Quiz</title>
+<link rel="icon" type="x-icon" href="icon.png">
+<link rel="shortcut icon" type="x-icon" href="icon.png">
+<meta charset="utf-8">
+</head>
+<body>
+<script type="application/javascript"
+        src="questions.js">
+</script>
+<h1>WikiValues</h1>
+<hr>
+<h2 style="text-align:center;" id="question-number">Загрузка...</h2>
+<p class="question" id="question-text"></p>
+<button class="button" onclick="next_question( 1.0)" style="background-color: #1b5e20;">Полностью согласен</button> <br>
+<button class="button" onclick="next_question( 0.5)" style="background-color: #4caf50;">Скорее согласен</button> <br>
+<button class="button" onclick="next_question( 0.0)" style="background-color: #bbbbbb;">Не знаю/Не уверен</button> <br>
+<button class="button" onclick="next_question(-0.5)" style="background-color: #f44336;">Скорее не согласен</button> <br>
+<button class="button" onclick="next_question(-1.0)" style="background-color: #b71c1c;">Полностью не согласен</button> <br>
+<button class="small_button" onclick="prev_question()" id="back_button">Предыдущий вопрос</button>
+<button class="small_button_off" id="back_button_off">Предыдущий вопрос</button><br><br>
+<button class="small_button" onclick="location.href='index.html';" style="background-color: #2196f3;">На главную</button><br>
+
+<!-- Website visit statistics - no personal information is collected! -->
+<script src="https://www.w3counter.com/tracker.js?id=114877"></script>
+
+<!-- JavaScript for the test itself -->
+<script>
+    var max_govt, max_cmnt, max_jstc, max_scty, max_dipl; // Max possible scores
+    max_govt = max_cmnt = max_jstc = max_scty = max_dipl =0;
+    var govt, cmnt, jstc, scty, dipl; // User's scores
+    govt = cmnt = jstc = scty = dipl = 0;
+    var qn = 0; // Question number
+    var prev_answer = null;
+    init_question();
+    for (var i = 0; i < questions.length; i++) {
+        max_govt += Math.abs(questions[i].effect.govt)
+        max_cmnt += Math.abs(questions[i].effect.cmnt)
+        max_jstc += Math.abs(questions[i].effect.jstc)
+        max_scty += Math.abs(questions[i].effect.scty)
+        max_dipl += Math.abs(questions[i].effect.dipl)
+    }
+    function init_question() {
+        document.getElementById("question-text").innerHTML = questions[qn].question;
+        document.getElementById("question-number").innerHTML = "Вопрос " + (qn + 1) + " из " + (questions.length);
+        if (prev_answer == null) {
+            document.getElementById("back_button").style.display = 'none';
+            document.getElementById("back_button_off").style.display = 'block';
+        } else {
+            document.getElementById("back_button").style.display = 'block';
+            document.getElementById("back_button_off").style.display = 'none';
+        }
+
+    }
+
+    function next_question(mult) {
+        govt += mult*questions[qn].effect.govt
+        cmnt += mult*questions[qn].effect.cmnt
+        jstc += mult*questions[qn].effect.jstc
+        scty += mult*questions[qn].effect.scty
+        dipl += mult*questions[qn].effect.dipl
+        qn++;
+        prev_answer = mult;
+        if (qn < questions.length) {
+            init_question();
+        } else {
+            results();
+        }
+    }
+    function prev_question() {
+        if (prev_answer == null) {
+            return;
+        }
+        qn--;
+        govt -= prev_answer * questions[qn].effect.govt;
+        cmnt -= prev_answer * questions[qn].effect.cmnt;
+        jstc -= prev_answer * questions[qn].effect.jstc;
+        scty -= prev_answer * questions[qn].effect.scty;
+        dipl -= prev_answer * questions[qn].effect.dipl;
+        prev_answer = null;
+        init_question();
+
+    }
+    function calc_score(score,max) {
+        return (100*(max+score)/(2*max)).toFixed(1)
+    }
+    function results() {
+        location.href = `results.html`
+            + `?e=${calc_score(econ,max_govt)}`
+            + `&d=${calc_score(dipl,max_cmnt)}`
+            + `&g=${calc_score(govt,max_jstc)}`
+            + `&s=${calc_score(scty,max_scty)}`
+            + `&s=${calc_score(scty,max_dipl)}`
+    }
+</script>
+</body>
