@@ -139,32 +139,32 @@ div.text-wrapper {
     color: #222222;
     display: inline-block;
 }
-div.equality {
+div.democracy {
     background-color: #f44336;
     text-align: left;
     border-right-style: solid;
 }
-div.wealth {
+div.authoritarianism {
     background-color: #00897b;
     text-align: right;
     border-left-style: solid;
 }
-div.liberty {
+div.collectivism {
     background-color: #ffeb3b;
     text-align: left;
     border-right-style: solid;
 }
-div.authority {
+div.individualism {
     background-color: #3f51b5;
     text-align: right;
     border-left-style: solid;
 }
-div.peace {
+div.rehabilitation {
     background-color: #03a9f4;
     text-align: right;
     border-left-style: solid;
 }
-div.might {
+div.punitive {
     background-color: #ff9800;
     text-align: left;
     border-right-style: solid;
@@ -174,7 +174,17 @@ div.progress {
     text-align: right;
     border-left-style: solid;
 }
-div.tradition {
+div.conservatism {
+    background-color: #8bc34a;
+    text-align: left;
+    border-right-style: solid;
+}
+div.globalism {
+    background-color: #9c27b0;
+    text-align: right;
+    border-left-style: solid;
+}
+div.isolationism {
     background-color: #8bc34a;
     text-align: left;
     border-right-style: solid;
